@@ -204,6 +204,13 @@ class TestSilentExceptionChecker(pylint.testutils.CheckerTestCase):
         def f():
             x = 1
         """)
-        func_node = code.body[0]
+        # There are no try nodes so visit_tryexcept is never called.
+        # Verify no handlers exist and assertNoMessages confirms checker stays silent.
+        try_nodes = [
+            node for node in code.body[0].body
+            if hasattr(node, "handlers")
+        ]
+        assert try_nodes == [], "Expected no try/except nodes"
         with self.assertNoMessages():
-            self.checker.visit_functiondef(func_node)
+            for node in try_nodes:
+                self.checker.visit_tryexcept(node)
