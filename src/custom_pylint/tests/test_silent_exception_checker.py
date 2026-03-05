@@ -1,5 +1,6 @@
 import astroid
 import pylint.testutils
+
 from custom_pylint.silent_exception_checker import SilentExceptionChecker
 
 
