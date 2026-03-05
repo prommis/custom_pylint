@@ -93,3 +93,4 @@ testpaths = ["src/custom_pylint/tests"]
 
 [tool.typos.default.extend-words]
 astroid = "astroid"
+idaes = "idaes"
