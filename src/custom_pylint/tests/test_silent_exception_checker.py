@@ -199,10 +199,11 @@ class TestSilentExceptionChecker(pylint.testutils.CheckerTestCase):
             self.checker.visit_tryexcept(try_node)
 
     def test_no_tryexcept(self):
-        """No try/except at all — not flagged."""
+        """Checker should not emit anything when there is no try/except."""
         code = astroid.parse("""
-        x = 1
+        def f():
+            x = 1
         """)
+        func_node = code.body[0]
         with self.assertNoMessages():
-            for node in code.body:
-                assert not hasattr(node, "handlers")
+            self.checker.visit_functiondef(func_node)
