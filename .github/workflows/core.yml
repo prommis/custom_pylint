@@ -35,7 +35,9 @@ jobs:
           black --version
       - name: Run black check
         run: black --check .
-
+      - name: Run isort check
+        run: isort --check-only src/
+        
   spell-check:
     name: Check spelling (typos)
     runs-on: ubuntu-latest
