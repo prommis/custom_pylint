@@ -1,0 +1,97 @@
+[build-system]
+requires = [
+    "setuptools >= 64",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "custom-pylint"
+description = "Custom pylint checkers for PrOMMiS"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE.md"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: Unix",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+keywords = ["pylint", "linting", "PrOMMiS"]
+# dynamic = ["version"]
+version = "0.1.0"
+dependencies = [
+    "pylint>=2.17.7",
+    "astroid>=2.15.8",
+]
+
+# pip install -e ".[dev]"
+[project.optional-dependencies]
+dev = [
+    "pytest==7.*",
+    "black==26.1.0",  
+    "isort" 
+]
+
+[project.urls]
+Repository = "https://github.com/prommis/custom-pylint"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# [tool.setuptools.dynamic]
+# version = {attr = "custom_pylint.version.VERSION"}
+
+[tool.pylint.main]
+py-version = "3.12"
+load-plugins = ["custom_pylint.silent_exception_checker"]
+
+[tool.pylint."messages control"]
+disable = [
+    "E", # all errors
+    "W", # all warnings
+    "C", # all conventions
+    "R", # all refactor
+]
+enable = [
+    "import-error",
+    "unused-import",
+    "wildcard-import",
+    "wrong-import-order",
+    "wrong-import-position",
+    "ungrouped-imports",
+    "implicit-str-concat",
+    "dangerous-default-value",
+    "invalid-name",
+    "silent-exception-handling",
+]
+module-naming-style = "snake_case"
+const-naming-style = "any"
+class-naming-style = "any"
+function-naming-style = "any"
+method-naming-style = "any"
+attr-naming-style = "any"
+argument-naming-style = "any"
+variable-naming-style = "any"
+class-attribute-naming-style = "any"
+inlinevar-naming-style = "any"
+
+[tool.pytest.ini_options]
+addopts = """
+--import-mode=importlib
+-rsx
+"""
+testpaths = ["src/custom_pylint/tests"]
+
+[tool.typos.default.extend-words]
+astroid = "astroid"
+idaes = "idaes"
