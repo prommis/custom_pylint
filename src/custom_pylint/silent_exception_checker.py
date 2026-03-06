@@ -22,11 +22,6 @@ class SilentExceptionChecker(BaseChecker):
             if self._is_silent_exception(handler):
                 self.add_message("silent-exception-handling", node=handler)
 
-    def _check_handlers(self, node) -> None:
-        for handler in node.handlers:
-            if self._is_silent_exception(handler):
-                self.add_message("silent-exception-handling", node=handler)
-
     def _is_silent_exception(self, handler: nodes.ExceptHandler) -> bool:
         """Check if exception handler only contains 'pass'."""
         if len(handler.body) != 1 or not isinstance(handler.body[0], nodes.Pass):
